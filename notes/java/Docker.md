@@ -1,37 +1,44 @@
-# Docker Commands:
+# Docker Commands
 
 -   `docker version`
 -   `docker info`
--   `docker run hello-world` First it will search in local, pulls image from dockeer hub and create and runs container.
+-   `ps ax | grep dockerd` To see dockerd details
+-   `ls /var/lib/docker` docker objects and old docker logs
+-   `ls /var/run/docker` current docker logs
+-   `ls /sys/fs/cgroup` cgroup info
+-   `ls /var/lib/docker/image/overlay2/layerdb/sha256/` shows list of layers
 -   `docker pull ubuntu` Pulls latest tag image from hub.
 -   `docker pull ubuntu:18.04` Pulls 18.04 tag from hub.
--   `docker build -t my-httpd .` Building an image <br>
-    Syntax: docker build -t image-name location-of-dockerfile
--   `docker images` List all the images<br>
--   `docker history tomcat` Shows history of the image.
--   `docker inspect <image-id>` Inspect the Image (Display's image info in json)<br>
+-   `docker images` List all the images
+-   `docker inspect <image-id>` Image info first 3 digit of image id works
 -   `docker inspect <container-id>` Inspect the container and image
--   `docker rm <container-id>` Remove a specific container
--   `docker rm $(docker ps -a -q)` Remove all containers -q is to get only container id's
--   `docker rmi <image-id>` remove image (note: no containers for this image should be running)
--   `docker rmi $(docker images -q)` remove all images
+-   `docker create fedora` Create a new container (pull+create)
+-   `docker run hello-world` First it will search in local, pulls image from dockeer hub and create and runs container. pull + create + start + attach
 -   `docker run -it --name testubuntu1 ubuntu` -it for Interactive terminal
--   `docker run -itd --name testubuntu1 ubuntu` it's necessary to include -it even you -d, When the ENTRYPOINT is bash or sh
-    docker run -d ubuntu:14.04 will immediately stop, cause bash can't find any pseudo terminal to be allocated. You have to specify -it so that bash or sh can be allocated to a pseudo terminal.
+-   `docker run -itd --name testubuntu2 ubuntu` it's necessary to include -it even you -d, When the ENTRYPOINT is bash or sh
+-   `docker stop <container-id>` Stop the container
+-   `docker start <container-id>` Stop the container
+-   `docker kill <container name>`
 -   `docker ps` Shows all the containers which are running
 -   `docker ps -a` Shows all the containers stopped and running
 -   `docker logs <container-id>` View the logs of the container
 -   `docker logs -ft <container-id>` Tail the logs of the container
--   `docker stop <container-id>` Stop the container
--   `docker start <container-id>` Stop the container
--   `docker exec -it <container-id> /bin/bash` Logging into the container, Note: The container must be started before we can do this.
--   `docker kill <container name>`
--   `docker commit <container-id>` To convert container to image. docker run for image to container.
+-   `docker history tomcat` Shows history of the image.
+-   `docker top <container-id>` shows PID
+-   `ps ax | grep containerd` to see containerd and ppid
+-   `docker rm <container-id>` Remove a specific container
+-   `docker rm $(docker ps -a -q)` Remove all containers -q is to get only container id's
+-   `docker rmi <image-id>` remove image (note: no containers for this image should be running)
+-   `docker rmi $(docker images -q)` remove all images
+docker run -d ubuntu:14.04 will immediately stop, cause bash can't find any pseudo terminal to be allocated. You have to specify -it so that bash or sh can be allocated to a pseudo terminal.
+-   `docker build -t my-httpd .` Building an image Syntax: docker build -t image-name location-of-dockerfile
 -   `docker tag <image-id> tagname` to give another name to image.
--   `docker attach imagename` Attach local standard input, output, and error streams to a running container
-Docker attach attaches to the process that runs in the container with PID 1. Where as Docker exec is used run a new process inside the container
--   `docker pull`
 -   `docker push`
+-   `docker exec -it <container-id> /bin/bash`  exec for child and attach for parent. Logging into the container, Note: The container must be started before we can do this.
+-   `docker attach imagename` Attach local standard input, output, and error streams to a running container
+Docker attach attaches to the process that runs in the container with PID 1. Where as Docker exec is used run a new process inside the container. down the container because we are exiting from parent
+-   `docker commit <container-id> cloudubuntu:v1` To convert container to image. docker run for image to container.
+-   `docker exec testUbuntu cat /etc/hosts`
 
 Running a container from the image
 Syntax: docker run -itd --name <container-name> -p <host-port>:<port in container> image-name:tag
@@ -47,21 +54,6 @@ docker run -itd --name my-http-container-with-random-port -P my-httpd:latest
 #note if you run this it will NOT run in detached mode.
 docker run -it --name my-http-container-not-detached-mode -p 5557:80 my-httpd:latest
 
-Step 5: View all the containers
--------------------------------------------------------------------
-
-
-
-Step 7: View Container logs
--------------------------------------------------------------------
-
-
-
-
-
-Step 11: Remove all the containers and images
--------------------------------------------------------------------
-#Note: To remove an image the corresponding container built from that image will need to be removed.
 
 
 Step 6: Logging into Dockerhub account on the terminal
@@ -74,95 +66,6 @@ docker commit <container-id> <repository-name>/<image-name>:<tag>
 docker pull <repository-name>/<image-name>:<tag>
 
 
-*****************************************************************
-Docker - machine: Windows and MAC
-*****************************************************************
-
-#Create 2 Docker machines (Remember both are virtual PCs running with different IPs)
-------------------------------------------------------------------------
-
-Windows: docker-machine create -d hyperv --hyperv-virtual-switch "vs-1" hyperv-vm-1
-MAC: docker-machine create --driver virtualbox --virtualbox-disk-size "20000" hyperv-vm-1
-
-Windows: docker-machine create -d hyperv --hyperv-virtual-switch "vs-1" hyperv-vm-2
-MAC: docker-machine create --driver virtualbox --virtualbox-disk-size "20000" hyperv-vm-2
-
-#Verify if docker-machine is running on an IP
-------------------------------------------------------------------------
-docker-machine ip hyperv-vm-1
-docker-machine ip hyperv-vm-2
-
-#Run the following command and whatever output you get run it again
-------------------------------------------------------------------------
-docker-machine env hyperv-vm-1
-docker-machine env hyperv-vm-2
-
-#Run the output of the last line of the command which is there before.
-------------------------------------------------------------------------
- & "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env hyperv-vm-1 | Invoke-Expression
- & "C:\Program Files\Docker\Docker\Resources\bin\docker-machine.exe" env hyperv-vm-2 | Invoke-Expression
-
-#Verify the docker-machine is active.
-----------------------------------------
-docker-machine ls
-
-Turning OFF and ON docker-machine
--------------------------------------
-docker-machine stop hyperv-vm-1
-docker-machine stop hyperv-vm-2
-docker-machine start hyperv-vm-1
-docker-machine start hyperv-vm-2
-
-Remove docker-machine (Turn off docker-machine on hyper-v manager for windows before executing this command, for MAC no extra steps are required)
-docker-machine rm -f <name-of-machine>
-
-*****************************************************************
-Docker - compose commands to follow (Common for MAC and Windows)
-Manual Reference: https://docs.docker.com/compose/reference/
-*****************************************************************
-Step-1 # Builds the image
--------------------------------------------------------------------
-docker-compose build
-
-#Build a specific image
-docker-compose build <service-name>
-
-#Builds and run the containers
-docker-compose up --build -d
-
-Step-2 # View the image (All started and stopped containers)
--------------------------------------------------------------------
-docker-compose ps 
-
-
-Step-3 # Run the image in detached/non-detached mode (use -d) 
--------------------------------------------------------------------
-docker-compose up -d
-docker-compose up
-docker-compose up -d <service-name>
-
-
-Step-4 # View logs and Tail logs
--------------------------------------------------------------------
-# View logs
-docker-compose logs <service-name>
-
-# Tail logs
-docker-compose  logs -ft <service-name>
-
-Step-5 # Login to the container
--------------------------------------------------------------------
-docker-compose run <service-name> /bin/bash 
-
-Step-6 # Stops all containers related to the compose file
---------------------------------------------------
-docker-compose stop
-
-#Stop and start specific container
-docker-compose stop <service-name>
-
-#Stop and remove containers
-docker-compose down
 
 1. Pull MySql image from Docker Hub (https://hub.docker.com/_/mysql/)
 `docker pull mysql:5.7`
