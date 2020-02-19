@@ -1,0 +1,63 @@
+# kubectl Commands
+
+-	`kubectl version`
+-	`kubectl cluster-info`
+-	`kubectl run my-nginx --image=nginx:alpine --port=80` to create deployment for a pod Syntax: kubectl run [container-name] --image=[image-name]
+-	`kubectl create -f pod.yml` create a resource Syntax: kubectl create [resource]
+-	`kubectl create -f pod.yml --save-config` the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+-	`kubectl apply -f pod.yml` create or modify a resource Syntax: kubectl apply [resource]
+-	`kubectl port-forward podid 8080:80` pods and containers are accessible within kubernetes cluster by default. to expose outside use port-forward Syntax: kubectl port-forward [pod-name | deployment-name | service-name] 8080:80
+-	`kubectl expose deployment [pod-name] ` expose a port for a deployment/pod.
+-	`kubectl get pods` information about pods
+-   `kubectl get pods --watch`
+-   `kubectl get pod [pod-name] -o yaml` show pod yaml you can see podIP and volume details.
+-	`kubectl get services`
+-   `kubectl get deployment`
+-   `kubectl get deployment [deployment-name] -o yaml` show deployment yaml you can see podIP and volume details.
+-   `kubectl get deployment --show-labels` List all Deployments and their labels
+-   `kubectl get deployment -l app=my-nginx` Get all Deployments with a specific label
+-   `kubectl get nodes` review status and roles
+-   `kubectl get nodes -o wide` Additional information about each node in the cluster.
+-   `kubectl get replicaset`
+-   `kubectl get endpoints [pod-name]`
+-	`kubectl get all` information about pods, deployment, services
+-   `kubectl get all --all-namespaces`
+-   `kubectl get secrets` Get secrets
+-   `kubectl get secrets [secret-name] -o yaml` Get YAML for specific secret
+-   `kubectl get endpoints [container-name]`
+-   `kubectl get events`
+-   `kubectl explain pod | more` Explain an individual resource in detail
+-   `kubectl explain pod.spec | more` 
+-   `kubectl explain pod.spec.containers | more` 
+-	`kubectl delete [pod | deployment | service] [pod-name | deployment-name | service-name]` pod will be recreated Syntax: kubectl delete pod [pod-id]
+-	`kubectl delete -f pod.yml` delete pod using yml
+-	`kubectl delete deployment my-nginx` delete deployment that manages pod, pod will not be recreated. Syntax: kubectl delete deployment [deployment-name]
+-   `kubectl scale deployment [deployment-name] --replicas=5` Scale the Deployment Pods to 5
+-   `kubectl scale -f pod.yml --replicas=5` Scale by using YAML file
+-   `kubectl describe [pod | deployment] [pod-name | deployment-name]`
+-   `kubectl exec -it [pod-name] [sh | /bin/bash/]` To login into container
+-   `kubectl create configmap [cm-name] --from-file=[path-to-file]` Create a ConfigMap using data from a config file.
+-   `kubectl create configmap [cm-name] --from-env-file=[path-to-file]` Create a ConfigMap from env file.
+-   `kubectl create configmap [cm-name] --from-literal=key1=value1 --from-literal=key2=value2` Create a ConfigMap from individual data values.
+-   `kubectl create -f app.configmap.yml` Create from ConfigMap manifest
+-   `kubectl logs [pod-name]` view the logs for pod.
+-   `kubectl logs [pod-name] -c [container-name]` view the logs of specific container within pod
+-   `kubectl logs -p [pod-name]` view the logs of previous running container
+-   `kubectl logs -f [pod-name]` stream the logs
+-   `kubectl config get-contexts` Get information about our current context, ensure we're logged into the correct cluster.
+-   `kubectl config use-context kubernetes-admin@kubernetes` Change our context if needed.
+-   `kubectl config use-context minikube`
+-   `kubectl cluster-info` Get information about the API Server for our current context, which should be kubernetes-admin@kubernetes
+-   `kubectl get pods -a` same as docker ps -a
+-   `kubectl config view`
+
+
+-	`kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml`
+-	`kubectl describe secret -n kube-system` copy this token Type:  kubernetes.io/service-account-token
+-	`kubectl proxy` to start dashboard
+-   `apk add curl`
+-   `kubectl expose deployment dh-nginx --type=NodePort`
+-   `kubectl expose deployment dh-nginx --type=LoadBalancer`
+-   `kubectl expose deployment dh-nginx --type=ClusterIP`
+
+-   `nodes (no), pods (po), services (svc)`
