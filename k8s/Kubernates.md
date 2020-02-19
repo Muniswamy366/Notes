@@ -1,4 +1,4 @@
-# kubectl Commands
+# Kubernetes Commands
 
 -	`kubectl version`
 -	`kubectl cluster-info`
