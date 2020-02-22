@@ -44,6 +44,7 @@
 -   `kubectl logs [pod-name] -c [container-name]` view the logs of specific container within pod
 -   `kubectl logs -p [pod-name]` view the logs of previous running container
 -   `kubectl logs -f [pod-name]` stream the logs
+-   `kubectl logs [pod-name] -l app=my-nginx` logs of labels
 -   `kubectl config get-contexts` Get information about our current context, ensure we're logged into the correct cluster.
 -   `kubectl config use-context kubernetes-admin@kubernetes` Change our context if needed.
 -   `kubectl config use-context minikube`
