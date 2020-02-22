@@ -54,6 +54,8 @@
 -   `kubectl cluster-info` Get information about the API Server for our current context, which should be kubernetes-admin@kubernetes
 -   `kubectl get pods -a` same as docker ps -a
 -   `kubectl config view`
+-   `kubectl top pod` memory info (this needs metrix server needs to be installed in cluster)
+-   `kubectl top node`
 
 
 -	`kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml`
