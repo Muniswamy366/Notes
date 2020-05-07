@@ -1,0 +1,49 @@
+https://gist.github.com/jeffbicca/7753014
+https://www.hackerrank.com/challenges/pangrams?utm_campaign=challenge-recommendation&utm_medium=email&utm_source=75-day-campaign
+https://github.com/yanz67/HackerRank/blob/master/Algorithms/Strings/Pangrams.java
+http://www.java-fries.com/2014/10/pangram-check-string-letters-alphabet/
+
+https://stackoverflow.com/questions/26638905/callbackhandler-in-cxf-3-x-wss4j-2-x
+https://codereview.stackexchange.com/questions/71790/design-a-chess-game-using-object-oriented-principles
+
+interview:
+https://algorithms.tutorialhorizon.com/snake-and-ladder-problem/
+
+hello
+
+Microservices:
+https://github.com/in28minutes/spring-microservices
+https://sivalabs.in/category/microservices/
+https://github.com/sivaprasadreddy/spring-boot-microservices-series
+https://www.quora.com/How-can-I-prepare-for-Microservices-interview
+http://www.baeldung.com/spring-boot-admin
+
+
+http://javaconceptoftheday.com/java-array-interview-questions-and-answers/
+https://www.dineshonjava.com/spring-boot-interview-questions-and-answers/
+https://www.boraji.com/spring-boot-creating-web-application-using-spring-mvc
+
+
+Java 8
+
+http://winterbe.com/posts/2014/03/16/java-8-tutorial/
+http://www.drdobbs.com/jvm/lambda-expressions-in-java-8/240166764
+http://www.java67.com/2014/04/java-8-stream-examples-and-tutorial.html
+https://technologyconversations.com/2014/02/25/java-8-tutorial-through-katas-berlin-clock-easy/
+https://javarevisited.blogspot.in/2014/02/10-example-of-lambda-expressions-in-java8.html
+https://www.mscharhag.com/java/java-8-date-time-api
+http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/
+
+Java 8 exmaples:
+https://www.mkyong.com/java8/java-8-streams-map-examples/
+https://github.com/winterbe/java8-tutorial
+https://github.com/eugenp/tutorials/tree/master/core-java-8
+
+
+No, since you are obtaining lock on the SearchBox.class, only one thread will enter the synchronized block at a time. So the first thread enters then finds searchBox and creates it and then leaves the synchronized block, then the second thread enter the block then it finds that the searchBox is not null because the first thread already created it so it will not create a new instance of searchBox
+
+The Double checked pattern is used to avoid obtaining the lock everytime the code is executed, if the call are not happening together then the first condition will fail and the code execution will not execute the locking thus saving resources.
+
+
+
+
