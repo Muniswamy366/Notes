@@ -1,4 +1,15 @@
 Redis is fast — blazingly fast — because it's designed from the ground up to be a high-performance, low-latency, in-memory data store.  
+#### Why is Redis so fast?
+
+    Redis is fast because it runs entirely in memory, avoids complex query processing, uses tight C-based data structures, and runs on a single-threaded event loop with minimal overhead.
+
+#### What Does "Single-Threaded" Mean in Redis?
+
+    Redis uses one thread to accept, process, and respond to commands.
+
+    This means no thread switching, no locks, and no race conditions.
+
+    Operations are processed one at a time, very quickly.
 
 1. In-Memory Storage (RAM)
 
