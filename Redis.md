@@ -32,7 +32,7 @@ Redis provides custom-optimized data types, such as:
 
     Bitmaps, HyperLogLogs, Streams
 
-These are implemented in C and use minimal memory and CPU cycles.
+These are implemented in C and use minimal memory and CPU cycles.  
 🚫 4. No Query Parsing Overhead
 
 Unlike databases or some advanced caches:
@@ -43,7 +43,7 @@ Unlike databases or some advanced caches:
 
     Commands are simple and direct (e.g., GET, SET, HGET)
 
-This makes it extremely lightweight per operation.
+This makes it extremely lightweight per operation.  
 📡 5. Minimal Protocol Overhead
 
 Redis uses a simple TCP-based RESP protocol (REdis Serialization Protocol):
@@ -62,7 +62,7 @@ You can:
 
     Or as a durable store (RDB snapshotting or AOF appending)
 
-But for caching, the focus is on speed — so persistence can be turned off or tuned to be asynchronous.
+But for caching, the focus is on speed — so persistence can be turned off or tuned to be asynchronous.  
 📈 7. High Throughput at Scale
 
 With its:
