@@ -84,3 +84,12 @@ Redis handles millions of ops/sec, making it ideal for:
     Caching DB query results
 
 
+### Performance Snapshot
+
+| Cache Layer       | Average Access Time         |
+| ----------------- | --------------------------- |
+| Redis (in-memory) | \~0.1 – 1 ms                |
+| Memcached         | Similar (but less flexible) |
+| Disk-based cache  | 10–100+ ms                  |
+| Database          | 100+ ms                     |
+
