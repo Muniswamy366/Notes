@@ -1,0 +1,1 @@
+Apache Kafka is a distributed streaming platform designed to handle high-throughput, low-latency, and fault-tolerant event processing. It works as a publish-subscribe messaging system and also as a distributed commit log.  
