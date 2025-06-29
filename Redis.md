@@ -104,3 +104,25 @@ Redis handles millions of ops/sec, making it ideal for:
 | Disk-based cache  | 10–100+ ms                  |
 | Database          | 100+ ms                     |
 
+
+| Feature               | **Redis**                                   | **Memcached**                           |
+| --------------------- | ------------------------------------------- | --------------------------------------- |
+| **Type**              | In-memory **data structure store**          | In-memory **cache store** (string-only) |
+| **Data Structures**   | ✅ Strings, Lists, Hashes, Sets, Sorted Sets | ❌ Strings only                          |
+| **Persistence**       | ✅ Yes (RDB, AOF)                            | ❌ No (purely volatile)                  |
+| **Replication**       | ✅ Yes                                       | ❌ No built-in                           |
+| **Cluster Support**   | ✅ Native clustering & partitioning          | ❌ No native clustering                  |
+| **Transactions**      | ✅ Yes (MULTI/EXEC)                          | ❌ No                                    |
+| **Pub/Sub**           | ✅ Yes                                       | ❌ No                                    |
+| **Lua Scripting**     | ✅ Yes                                       | ❌ No                                    |
+| **Eviction Policy**   | Fine-grained (per key or policy)            | Global LRU                              |
+| **Memory Efficiency** | Good for complex types                      | Very efficient for simple strings       |
+| **Use Cases**         | Cache + queue + pub/sub + counters + more   | Simple caching                          |
+
+| If you need...                              | Choose          |
+| ------------------------------------------- | --------------- |
+| Complex data structures (lists, sets, etc.) | ✅ **Redis**     |
+| Persistence or high availability            | ✅ **Redis**     |
+| Simple memory cache for flat string data    | ✅ **Memcached** |
+| Minimal memory usage & maximum raw speed    | ✅ **Memcached** |
+| Cluster, pub/sub, or transactions           | ✅ **Redis**     |
