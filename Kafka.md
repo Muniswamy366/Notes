@@ -1,5 +1,18 @@
 Apache Kafka is a distributed streaming platform designed to handle high-throughput, low-latency, and fault-tolerant event processing. It works as a publish-subscribe messaging system and also as a distributed commit log.  
 
+What is a Commit Log?  
+
+A commit log (also known as a write-ahead log) is an append-only, ordered sequence of records, where new entries are written at the end and never modified. It is a durable structure—once a message is written, it stays until retention conditions are met.  
+```
+Partition 0 (Commit Log):
+
+Offset:      0       1       2       3       4       ...
+Record:   [msg1]  [msg2]  [msg3]  [msg4]  [msg5]  ...
+
+• New messages always go to the end.
+• Consumers read sequentially using offsets.
+```
+
 🔷 1. High-Level Components
 | Component      | Description                                                                              |
 | -------------- | ---------------------------------------------------------------------------------------- |
