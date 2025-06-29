@@ -72,6 +72,36 @@ Replication factor: 2
 
     Works with transactional.id and Kafka Streams.
 
+🟠 At Least Once:
+
+    A payment message may be replayed after a failure.
+
+    If your consumer isn’t idempotent, the same user may be charged twice.
+
+At Least Once Setup:
+```
+acks=all
+retries=5
+enable.idempotence=false (or default)
+```
+
+You’ll need to write your consumer logic to handle duplicates.
+
+🟢 Exactly Once:
+
+    Kafka ensures the payment is processed only one time, even if failures happen in the middle.
+Exactly Once Setup (Producer + Consumer):
+```
+acks=all
+retries=5
+enable.idempotence=true  # Required for exactly once
+```
+
+Use Kafka Transactions to commit messages and offsets atomically.
+
+Consumers should read committed data only (isolation.level=read_committed).
+
+
 🔷 5. Consumer Internals
 
     Subscribes to one or more topics.
