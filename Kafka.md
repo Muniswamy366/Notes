@@ -396,4 +396,93 @@ kafkaTemplate.send("my-topic", "Some message with no key");
 
 ➡️ Useful for even load balancing, but no message ordering is guaranteed across messages.
 
+### Queuing vs publish-subscribe in kafka
+ 1. Queuing Model in Kafka
 
+    You have one topic and one consumer group
+
+    Kafka ensures that each message is delivered to only one consumer instance in that group
+
+    Used for parallel processing and load balancing
+
+🔸 Example:
+
+    Topic: orders
+
+    Group: order-processors
+
+    3 Consumers in group → Kafka distributes messages among them
+
+🔷 2. Publish-Subscribe Model in Kafka
+
+    You have one topic and multiple consumer groups
+
+    Kafka delivers all messages to all groups
+
+    Used for event broadcasting
+
+🔸 Example:
+
+    Topic: user-signups
+
+    Group 1: email-service
+
+    Group 2: analytics-service
+
+✅ Step 1: Producer  
+```
+@Service
+public class SignupProducer {
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    public void publishSignupEvent(String username) {
+        kafkaTemplate.send("user-signup", username);
+        System.out.println("Produced signup event for user: " + username);
+    }
+}
+```
+
+✅ Step 2: Consumer - Publish/Subscribe Pattern  
+```
+@Component
+public class EmailNotificationConsumer {
+
+    @KafkaListener(topics = "user-signup", groupId = "email-service")
+    public void listen(String message) {
+        System.out.println("[Email Service] Received: " + message);
+    }
+}
+
+@Component
+public class AnalyticsConsumer {
+
+    @KafkaListener(topics = "user-signup", groupId = "analytics-service")
+    public void listen(String message) {
+        System.out.println("[Analytics Service] Received: " + message);
+    }
+}
+```
+Each of these is in a different consumer group, so both will get every message (Pub/Sub).  
+✅ Step 3: Consumer - Queuing Pattern  
+```
+@Component
+public class Worker1 {
+
+    @KafkaListener(topics = "user-signup", groupId = "signup-workers")
+    public void listen(String message) {
+        System.out.println("[Worker1] Processed: " + message);
+    }
+}
+
+@Component
+public class Worker2 {
+
+    @KafkaListener(topics = "user-signup", groupId = "signup-workers")
+    public void listen(String message) {
+        System.out.println("[Worker2] Processed: " + message);
+    }
+}
+```
+Both are in the same group, so each message will go to only one of them (Queuing pattern).  
