@@ -12,8 +12,13 @@ Record:   [msg1]  [msg2]  [msg3]  [msg4]  [msg5]  ...
 • New messages always go to the end.
 • Consumers read sequentially using offsets.
 ```
+![image](https://github.com/user-attachments/assets/085d49d8-5016-4e90-88f6-7522cf25650c)  
 
-Core Components
+Apache Kafka's architecture is very simple, which can result in better performance and throughput in some systems. Every topic in Kafka is like a simple log file. When a producer publishes a message, the Kafka server appends it to the end of the log file for its given topic. The server also assigns an offset, which is a number used to permanently identify each message. As the number of messages grows, the value of each offset increases; for example if the producer publishes three messages the first one might get an offset of 1, the second an offset of 2, and the third an offset of 3.
+In Kafka, the client is responsible for remembering the offset count and retrieving messages. The Kafka server doesn't track or manage message consumption. By default, a Kafka server will keep a message for seven days. A background thread in the server checks and deletes messages that are seven days or older. A consumer can access messages as long as they are on the server. It can read a message multiple times, and even read messages in reverse order of receipt. But if the consumer fails to retrieve the message before the seven days are up, it will miss that message.
+
+
+### Core Components
 1. Broker
 * The heart of Kafka - a server that stores and serves data  
 * Each broker is identified by a unique ID  
@@ -22,24 +27,20 @@ Core Components
 * The broker instance which we connect to access cluster is also known as bootstrap server.  
 
 2. Topics
-Logical channels or categories where messages are published
 
-Topics are split into partitions for scalability and parallelism
+* A topic is a logical name to which the records are published
+* Topics are split into partitions for scalability and parallelism
+* Each topic can have multiple partitions distributed across brokers
+* Messages within a partition are ordered by offset
 
-Each topic can have multiple partitions distributed across brokers
+3. Partitions  
+* Physical divisions of topics stored on disk
+* Enable parallel processing and horizontal scaling
+* Each partition is replicated across multiple brokers for fault tolerance
+* Messages are appended to partitions in an immutable log structure
+* Each partition will have a leader which will take read/write operations to that partition.
 
-Messages within a partition are ordered by offset
-
-3. Partitions
-Physical divisions of topics stored on disk
-
-Enable parallel processing and horizontal scaling
-
-Each partition is replicated across multiple brokers for fault tolerance
-
-Messages are appended to partitions in an immutable log structure
-
-4. Producers
+4. Producers  
 Applications that publish/send messages to Kafka topics
 
 Can choose which partition to send data to (round-robin, key-based, or custom)
@@ -48,7 +49,7 @@ Support batching and compression for efficiency
 
 Receive acknowledgments from brokers to ensure delivery
 
-5. Consumers
+5. Consumers  
 Applications that read/subscribe to messages from topics
 
 Can read from multiple partitions simultaneously
@@ -57,7 +58,7 @@ Track their position using offsets
 
 Support both individual and group consumption patterns
 
-6. Consumer Groups
+6. Consumer Groups  
 Multiple consumers working together to process a topic
 
 Each partition is consumed by only one consumer within a group
