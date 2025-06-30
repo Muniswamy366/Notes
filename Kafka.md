@@ -371,7 +371,12 @@ producer.send(new ProducerRecord<>("my-topic", 2, key, value)); // Goes to parti
 
 If a key is provided, Kafka applies a hashing algorithm to the key to determine the partition.
 ```
-partition = hash(key) % number_of_partitions
+kafkaTemplate.send("my-topic", "user123", "User logged in");
+```
+
+Kafka will compute:
+```
+partition = hash("user123") % numPartitions
 ```
 
 ➡️ This ensures that all messages with the same key go to the same partition, preserving ordering.  
@@ -386,7 +391,7 @@ All events with key user-123 go to the same partition.
 
 If no partition and no key are specified, Kafka distributes messages in a round-robin fashion across all partitions.
 ```
-producer.send(new ProducerRecord<>("my-topic", null, "some message"));
+kafkaTemplate.send("my-topic", "Some message with no key");
 ```
 
 ➡️ Useful for even load balancing, but no message ordering is guaranteed across messages.
