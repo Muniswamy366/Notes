@@ -15,13 +15,11 @@ Record:   [msg1]  [msg2]  [msg3]  [msg4]  [msg5]  ...
 
 Core Components
 1. Broker
-The heart of Kafka - a server that stores and serves data
-
-Each broker is identified by a unique ID
-
-Brokers form a cluster and can handle thousands of reads/writes per second
-
-Responsible for receiving messages from producers and serving them to consumers
+* The heart of Kafka - a server that stores and serves data  
+* Each broker is identified by a unique ID  
+* Brokers form a cluster and can handle thousands of reads/writes per second  
+* Responsible for receiving messages from producers and serving them to consumers  
+* The broker instance which we connect to access cluster is also known as bootstrap server.  
 
 2. Topics
 Logical channels or categories where messages are published
@@ -93,6 +91,46 @@ Performance: High throughput through batching and zero-copy transfers
 Fault Tolerance: Automatic failover and data replication
 
 Flexibility: Support for various consumption patterns  
+
+### 📦 Kafka Data Flow
+
+    Producer sends data → to a topic (optionally choosing partition).
+
+    Kafka Broker receives the message and writes it to the correct partition.
+
+    The message is persisted on disk and replicated to other brokers.
+
+    Consumers in a consumer group read from partitions.
+
+    Offsets (position of read messages) are tracked and committed.
+
+### 🔄 Kafka Replication
+
+    Each partition has:
+
+        One leader (handles all reads/writes).
+
+        Zero or more followers (replicas).
+
+    Replication provides fault tolerance.
+
+    If a broker goes down, a replica becomes the new leader.
+
+### 🛠️ Kafka Guarantees
+
+    Durability: Messages are persisted on disk.
+
+    High throughput: Batch compression, zero-copy I/O.
+
+    Scalability: Horizontal scaling using partitions and consumer groups.
+
+    Delivery semantics:
+
+        At-most-once: message might be lost
+
+        At-least-once: message might be duplicated
+
+        Exactly-once: message is delivered only once (requires configuration)
 
 🔷 1. High-Level Components
 | Component      | Description                                                                              |
