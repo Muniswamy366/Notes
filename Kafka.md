@@ -486,3 +486,22 @@ public class Worker2 {
 }
 ```
 Both are in the same group, so each message will go to only one of them (Queuing pattern).  
+
+### Publish-Subscribe kafka, if two consumers are in single group, how the message are consumed  
+
+Short Answer:
+
+    If **two consumers are in the same consumer group, Kafka will load-balance messages across them — meaning each message is consumed by only one consumer in that group.
+
+So, in this case:
+
+    NOT publish-subscribe
+
+    It's behaving like a queue (i.e., competing consumers)
+
+### Point to Point and queue model same in kafka
+
+Yes, in Kafka, the Point-to-Point model and the Queue model essentially refer to the same concept. They are functionally equivalent, even though the terminology differs slightly depending on context.  
+
+
+
