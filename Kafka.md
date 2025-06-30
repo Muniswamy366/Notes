@@ -13,6 +13,87 @@ Record:   [msg1]  [msg2]  [msg3]  [msg4]  [msg5]  ...
 • Consumers read sequentially using offsets.
 ```
 
+Core Components
+1. Broker
+The heart of Kafka - a server that stores and serves data
+
+Each broker is identified by a unique ID
+
+Brokers form a cluster and can handle thousands of reads/writes per second
+
+Responsible for receiving messages from producers and serving them to consumers
+
+2. Topics
+Logical channels or categories where messages are published
+
+Topics are split into partitions for scalability and parallelism
+
+Each topic can have multiple partitions distributed across brokers
+
+Messages within a partition are ordered by offset
+
+3. Partitions
+Physical divisions of topics stored on disk
+
+Enable parallel processing and horizontal scaling
+
+Each partition is replicated across multiple brokers for fault tolerance
+
+Messages are appended to partitions in an immutable log structure
+
+4. Producers
+Applications that publish/send messages to Kafka topics
+
+Can choose which partition to send data to (round-robin, key-based, or custom)
+
+Support batching and compression for efficiency
+
+Receive acknowledgments from brokers to ensure delivery
+
+5. Consumers
+Applications that read/subscribe to messages from topics
+
+Can read from multiple partitions simultaneously
+
+Track their position using offsets
+
+Support both individual and group consumption patterns
+
+6. Consumer Groups
+Multiple consumers working together to process a topic
+
+Each partition is consumed by only one consumer within a group
+
+Enables load balancing and fault tolerance
+
+Automatic rebalancing when consumers join/leave
+
+### Supporting Infrastructure
+ZooKeeper (Legacy) / KRaft (New)
+ZooKeeper: Manages cluster metadata, leader election, and configuration
+
+KRaft: New consensus protocol replacing ZooKeeper for simpler architecture
+
+Replication
+Each partition has one leader and multiple followers
+
+Leader handles all reads/writes for that partition
+
+Followers replicate data from the leader
+
+Automatic failover if leader becomes unavailable
+
+### Key Architectural Benefits
+Scalability: Horizontal scaling through partitioning
+
+Durability: Configurable replication and persistence
+
+Performance: High throughput through batching and zero-copy transfers
+
+Fault Tolerance: Automatic failover and data replication
+
+Flexibility: Support for various consumption patterns  
+
 🔷 1. High-Level Components
 | Component      | Description                                                                              |
 | -------------- | ---------------------------------------------------------------------------------------- |
