@@ -34,6 +34,7 @@ Record:   [msg1]  [msg2]  [msg3]  [msg4]  [msg5]  ...
 * Each partition is replicated across multiple brokers for fault tolerance
 * Messages are appended to partitions in an immutable log structure
 * Each partition will have a leader which will take read/write operations to that partition.
+* The commit log in Kafka is per partition, not per topic.  
 
 4. Producers  
 Applications that publish/send messages to Kafka topics
@@ -358,5 +359,36 @@ Broker 1: P0 (Leader), P2 (Follower)
 Broker 2: P0 (Follower), P1 (Leader)
 Broker 3: P1 (Follower), P2 (Leader)  
 
+### How kafka identifies which partition message has to go?
+🔷 1. Custom Partition (User-Defined)  
+
+If the producer explicitly specifies the partition number, Kafka uses that.
+```
+producer.send(new ProducerRecord<>("my-topic", 2, key, value)); // Goes to partition 2
+```
+
+🔷 2. Key-Based Partitioning  
+
+If a key is provided, Kafka applies a hashing algorithm to the key to determine the partition.
+```
+partition = hash(key) % number_of_partitions
+```
+
+➡️ This ensures that all messages with the same key go to the same partition, preserving ordering.  
+
+Example:
+```
+producer.send(new ProducerRecord<>("my-topic", "user-123", "event1"));
+```
+All events with key user-123 go to the same partition.
+
+🔷 3. Round-Robin (Default when No Key)  
+
+If no partition and no key are specified, Kafka distributes messages in a round-robin fashion across all partitions.
+```
+producer.send(new ProducerRecord<>("my-topic", null, "some message"));
+```
+
+➡️ Useful for even load balancing, but no message ordering is guaranteed across messages.
 
 
