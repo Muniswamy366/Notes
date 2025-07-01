@@ -359,6 +359,39 @@ Broker 1: P0 (Leader), P2 (Follower)
 Broker 2: P0 (Follower), P1 (Leader)
 Broker 3: P1 (Follower), P2 (Leader)  
 
+![image](https://github.com/user-attachments/assets/770c923d-2687-4589-b8bc-1f4f686be0e3)  
+
+![image](https://github.com/user-attachments/assets/0b92c881-78a2-4f38-8cff-1c0c56c8c023)  
+
+For ANY single message (like M1, M2, M3, etc.):
+
+**Consumer Group "order-processing":**
+
+Has 4 consumers (C1, C2, C3, C4)  
+Only 1 consumer from this group will process the message  
+Which specific consumer depends on partition assignment  
+
+
+**Consumer Group "analytics":**
+
+Has 3 consumers (A1, A2, A3)  
+Only 1 consumer from this group will process the message  
+Independent of the first group's processing  
+
+
+**Consumer Group "audit":**
+
+Has 1 consumer (D1)  
+That 1 consumer will process the message  
+
+Total: 3 consumers will process each message (one from each group)  
+Key Points:  
+
+Group 1 might process orders  
+Group 2 might generate analytics  
+Group 3 might create audit logs  
+
+
 ### How kafka identifies which partition message has to go?
 🔷 1. Custom Partition (User-Defined)  
 
@@ -535,7 +568,11 @@ Kafka offers three message delivery semantics:
 ### 3. How does Kafka achieve high throughput and low latency?
 
 * Uses **sequential disk I/O** with append-only logs.
+  - Kafka writes data to disk sequentially instead of randomly.
+  - This takes advantage of OS-level disk cache and I/O prefetching, avoiding costly random access.
 * **Batching and compression** reduce network overhead.
+  - Kafka batches messages from producers and consumers.
+  - Kafka supports Snappy, GZIP, LZ4, and ZSTD compression.
 * **Zero-copy** technology allows efficient file transfer.
 * Scales horizontally using **partitions**.
 
