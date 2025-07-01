@@ -503,5 +503,135 @@ So, in this case:
 
 Yes, in Kafka, the Point-to-Point model and the Queue model essentially refer to the same concept. They are functionally equivalent, even though the terminology differs slightly depending on context.  
 
+## Interview Questions and Answers
+
+**Apache Kafka Interview Questions and Answers for Tech Leads and Architects**
+
+---
+
+### 1. Explain Kafka architecture in detail.
+
+Kafka is a distributed event streaming platform composed of:
+
+* **Producers** that send records to **topics**.
+* **Topics** split into **partitions**, which are distributed across **brokers**.
+* **Consumers** that read from topics (usually via **consumer groups**).
+* Each partition has one **leader** and optional **replicas** (followers).
+* Kafka uses a **commit log** architecture to provide durability and replay.
+* **ZooKeeper** (or **KRaft** in newer versions) manages metadata and broker coordination.
+
+---
+
+### 2. What are Kafka’s delivery guarantees?
+
+Kafka offers three message delivery semantics:
+
+* **At most once**: Messages may be lost but never duplicated.
+* **At least once**: Messages are not lost, but duplicates may occur.
+* **Exactly once**: Messages are neither lost nor duplicated. Achieved using idempotent producers and transactional processing.
+
+---
+
+### 3. How does Kafka achieve high throughput and low latency?
+
+* Uses **sequential disk I/O** with append-only logs.
+* **Batching and compression** reduce network overhead.
+* **Zero-copy** technology allows efficient file transfer.
+* Scales horizontally using **partitions**.
+
+---
+
+### 4. What is ISR (In-Sync Replica)?
+
+ISR is the set of replicas that are fully caught up with the leader. Kafka only commits messages that are acknowledged by all ISRs when `acks=all` is used.
+
+---
+
+### 5. How does Kafka ensure fault tolerance?
+
+* Each partition is replicated across brokers.
+* If a broker (leader) fails, an ISR becomes the new leader.
+* Kafka Controller handles failover and metadata management.
+
+---
+
+### 6. Explain exactly-once delivery in Kafka.
+
+* **Idempotent producers** prevent duplicate writes.
+* **Transactions** ensure atomic writes across partitions.
+* **Consumers** use `read_committed` isolation to avoid reading uncommitted/aborted data.
+* Offsets and messages are committed in a single transaction.
+
+---
+
+### 7. How does a Kafka consumer group work?
+
+* A **consumer group** allows multiple consumers to share the load.
+* Each partition is read by only one consumer in a group.
+* Kafka manages **offsets** per group to track progress.
+
+---
+
+### 8. What is log compaction?
+
+Log compaction retains the **latest value** for each key, unlike standard retention that deletes old records. Useful for maintaining the latest state (e.g., user profiles).
+
+---
+
+### 9. How does Kafka scale horizontally?
+
+* Add **brokers** to distribute partitions.
+* Increase **partitions** to improve parallelism.
+* Add **consumer instances** to share the load within a group.
+
+---
+
+### 10. Describe Kafka’s role in a microservices architecture.
+
+Kafka decouples services by enabling **asynchronous communication**. Each service can produce or consume events independently, improving fault tolerance, resilience, and scalability.
+
+---
+
+### 11. What is Kafka Streams?
+
+Kafka Streams is a Java library for building real-time processing applications:
+
+* Provides windowing, joins, aggregations.
+* Works directly on Kafka topics.
+* Fully distributed, fault-tolerant.
+
+---
+
+### 12. How does Kafka Connect help in integration?
+
+Kafka Connect is a framework for **source and sink connectors**:
+
+* Moves data between Kafka and external systems (DBs, S3, Elasticsearch).
+* Supports configuration-driven deployments.
+
+---
+
+### 13. What is KRaft mode in Kafka?
+
+KRaft (Kafka Raft) mode replaces ZooKeeper by managing metadata within Kafka itself using the Raft consensus protocol. It simplifies deployments and improves scalability.
+
+---
+
+### 14. How does Kafka handle backpressure?
+
+* Consumers control the pace of consumption via `max.poll.records`.
+* Use of proper **consumer lag monitoring**.
+* Kafka can **pause consumption** or redirect to **dead letter queues** if needed.
+
+---
+
+### 15. Design a real-time fraud detection system using Kafka.
+
+* **Producers** emit transaction events.
+* Events are streamed through **Kafka Streams** or **Flink** to apply fraud rules.
+* Suspicious events are sent to a **review topic**.
+* Alerts are generated and stored in databases or sent to downstream systems.
+
+---
 
 
