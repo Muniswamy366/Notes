@@ -671,4 +671,25 @@ KRaft (Kafka Raft) mode replaces ZooKeeper by managing metadata within Kafka its
 
 ---
 
+### 15. How do Kafka consumer groups work?
+
+A consumer group is a set of consumers that collaboratively consume messages from a topic. Each partition is consumed by only one consumer in the group at any given time. This enables horizontal scaling.  
+
+If a consumer fails or joins, Kafka rebalances partitions among group members. Offsets are managed per group, allowing multiple groups to consume independently.  
+
+### 16. How is exactly-once delivery implemented in Kafka?
+
+Kafka achieves exactly-once semantics through:
+
+    Idempotent producers (enable.idempotence=true) which prevent duplicate writes.
+
+    Transactions that allow producers to write to multiple partitions atomically.
+
+    Consumers using read_committed to avoid reading uncommitted/aborted data.
+
+    Transactional offsets: Offsets are committed as part of the transaction to maintain consistency between processing and offset storage.
+
+This combination ensures no duplication, no loss, and consistency.  
+
+
 
