@@ -671,13 +671,15 @@ KRaft (Kafka Raft) mode replaces ZooKeeper by managing metadata within Kafka its
 
 ---
 
-### 15. How do Kafka consumer groups work?
+### 16. How do Kafka consumer groups work?
 
 A consumer group is a set of consumers that collaboratively consume messages from a topic. Each partition is consumed by only one consumer in the group at any given time. This enables horizontal scaling.  
 
 If a consumer fails or joins, Kafka rebalances partitions among group members. Offsets are managed per group, allowing multiple groups to consume independently.  
 
-### 16. How is exactly-once delivery implemented in Kafka?
+---
+
+### 17. How is exactly-once delivery implemented in Kafka?
 
 Kafka achieves exactly-once semantics through:
 
@@ -691,7 +693,9 @@ Kafka achieves exactly-once semantics through:
 
 This combination ensures no duplication, no loss, and consistency.  
 
-### explain dead letter queue in kafka
+---
+
+### 18. explain dead letter queue in kafka
 A Dead Letter Queue (DLQ) in Kafka is a special topic used to store messages that cannot be successfully processed by a consumer, even after retries.  
 
 It’s a critical pattern for reliability and observability in microservices, allowing you to:  
