@@ -6,10 +6,10 @@ Writing asynchronous and non-blocking code is not just an optimization — it’
 
 CompletableFuture is part of Java’s java.util.concurrent package and helps you:  
 
-✅ Run tasks asynchronously
-✅ Chain multiple tasks without blocking
-✅ Combine multiple futures
-✅ Handle errors gracefully
+✅ Run tasks asynchronously   
+✅ Chain multiple tasks without blocking  
+✅ Combine multiple futures  
+✅ Handle errors gracefully  
 
 🧪 Real-World Example – Calling Two APIs in Parallel  
 
