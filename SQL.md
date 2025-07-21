@@ -36,3 +36,10 @@ WHERE salary < (
     )
 );
 ```
+### How to find duplicate records in a table on database
+```
+SELECT email, COUNT(*) AS count
+FROM Employee
+GROUP BY email
+HAVING COUNT(*) > 1;
+```
