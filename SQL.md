@@ -42,3 +42,13 @@ SELECT email, COUNT(*) AS count FROM Employee GROUP BY email HAVING COUNT(*) > 1
 
 SELECT email, COUNT(email) AS count FROM Employee GROUP BY email HAVING count > 1;
 ```
+### Department Highest Salary
+```
+SELECT d.name AS Department, e.name AS Employee, e.salary AS Salary FROM Employee e
+JOIN Department d ON e.departmentId = d.id
+WHERE (e.departmentId, e.salary) IN (
+    SELECT departmentId, MAX(salary)
+    FROM Employee
+    GROUP BY departmentId
+);
+```
