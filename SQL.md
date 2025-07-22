@@ -52,3 +52,89 @@ WHERE (e.departmentId, e.salary) IN (
     GROUP BY departmentId
 );
 ```
+
+### How do you improve read transaction from db apart from creating indexs
+
+✅ 1. Use Proper Indexing  
+Use B-tree indexes for exact lookups and range scans  
+
+Use composite indexes when filtering on multiple columns  
+
+Covering indexes can satisfy the query entirely  
+```
+-- Create index on frequently queried column
+CREATE INDEX idx_employee_dept ON employee(department_id);
+```
+⚠️ Avoid over-indexing — it can hurt write performance.
+
+✅ 2. Caching (In-Memory or External)  
+Reduce DB hits by storing frequently accessed data.  
+
+In-memory caches: ConcurrentHashMap, Guava Cache  
+
+External caches: Redis, Memcached  
+
+Spring Boot: Use @Cacheable  
+```
+@Cacheable("employee")
+public Employee getEmployeeById(Long id) {
+    return employeeRepository.findById(id).orElse(null);
+}
+```
+✅ 3. Read Replicas (Database-Level)  
+Use read replicas in systems like MySQL, PostgreSQL, or Aurora.  
+
+Offload read traffic from the primary DB  
+
+Useful in high-read, low-write scenarios  
+
+Configure your app to route reads to replicas  
+
+✅ 4. Connection Pooling  
+Avoid creating a new connection per request.  
+
+Use HikariCP, Apache DBCP, or C3P0  
+
+Proper pool sizing avoids latency due to connection churn  
+
+# Example in Spring Boot
+```
+spring.datasource.hikari.maximum-pool-size=20
+```
+
+✅ 5. Optimized Queries  
+Avoid SELECT *, select only necessary columns  
+
+Use LIMIT, OFFSET for pagination  
+
+Rewrite N+1 queries with JOINs or batch fetching  
+```
+-- Instead of:
+SELECT * FROM employees;
+
+-- Do:
+SELECT id, name, department FROM employees LIMIT 100;
+```
+✅ 6. Materialized Views  
+Precompute and store query results for expensive aggregations or joins.  
+
+Best for analytical queries  
+
+Need periodic refresh  
+```
+CREATE MATERIALIZED VIEW top_salaries AS
+SELECT department_id, MAX(salary) FROM employees GROUP BY department_id;
+```
+✅ 7. Partitioning / Sharding  
+Divide large tables into smaller ones:  
+
+Horizontal partitioning (e.g., based on region, date)  
+
+Improves I/O and query performance  
+
+✅ 8. Denormalization  
+Store read-optimized views or copies of data to avoid expensive joins.  
+
+Use with caution (redundancy risk)  
+
+Best when reads vastly outnumber writes  
