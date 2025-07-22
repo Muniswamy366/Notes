@@ -138,3 +138,30 @@ Store read-optimized views or copies of data to avoid expensive joins.
 Use with caution (redundancy risk)  
 
 Best when reads vastly outnumber writes  
+
+### What is an Index?
+An index is a data structure (commonly a B-tree) that allows the database to quickly locate rows based on the values of one or more columns — similar to how a book's index helps locate topics without reading every page.  
+✅ Why Indexing Improves Read Performance  
+Without indexes, the database performs a full table scan — examining every row to find matches.  
+
+With indexes:  
+
+Queries run faster, especially on large datasets  
+
+Joins and WHERE conditions execute more efficiently  
+
+Sorting and grouping (ORDER BY, GROUP BY) are improved  
+
+🛠️ Types of Indexes  
+1. Single-Column Index  
+Index on one column.  
+
+```
+CREATE INDEX idx_employee_name ON employee(name);
+```
+2. Composite (Multi-Column) Index
+Index on multiple columns.
+```
+CREATE INDEX idx_emp_dept_salary ON employee(department_id, salary);
+```
+**Use when queries filter or sort on multiple columns.**
