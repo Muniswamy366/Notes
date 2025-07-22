@@ -50,4 +50,31 @@ CompletableFuture.supplyAsync(() -> {
   .thenAccept(System.out::println);
 ```
 
+Example with CompletableFuture – Non-blocking
+```
+CompletableFuture.supplyAsync(() -> {
+    try { Thread.sleep(1000); } catch (Exception e) {}
+    return "Hello CompletableFuture!";
+}).thenAccept(result -> {
+    System.out.println(result);  // Non-blocking callback
+});
+```
+Chaining
+```
+CompletableFuture.supplyAsync(() -> "Hello")
+    .thenApply(s -> s + " World")
+    .thenAccept(System.out::println);  // prints: Hello World
+```
+Combining Two Futures
+```
+CompletableFuture<String> first = CompletableFuture.supplyAsync(() -> "Java");
+CompletableFuture<String> second = CompletableFuture.supplyAsync(() -> "Future");
+
+CompletableFuture<Void> combined = CompletableFuture.allOf(first, second);
+
+combined.thenRun(() -> {
+    System.out.println(first.join() + " " + second.join());  // Output: Java Future
+});
+```
+
 
