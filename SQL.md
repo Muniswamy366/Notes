@@ -165,3 +165,60 @@ Index on multiple columns.
 CREATE INDEX idx_emp_dept_salary ON employee(department_id, salary);
 ```
 **Use when queries filter or sort on multiple columns.**
+
+### What is Database Sharding?
+Sharding is the process of splitting a large database into smaller, faster, more manageable pieces called shards, which are distributed across multiple servers.  
+
+Each shard contains a subset of the data, and all shards together form the complete dataset.  
+
+👉 Think of it like splitting a big phonebook into multiple smaller phonebooks, each covering a different city.  
+
+#### How Sharding Works
+Sharding Key:  
+A column used to decide which shard the data belongs to (e.g., customer_id, region_id).  
+
+Data Distribution Methods:  
+
+Range-based sharding:  
+Example: User IDs 1–1M go to Shard 1, 1M–2M go to Shard 2.  
+🔸 Problem: Some shards may grow faster (hotspot issue).  
+
+Hash-based sharding:  
+Example: shard_id = hash(customer_id) % N  
+Distributes data evenly, avoids hotspots.  
+🔸 Problem: Harder to add/remove shards.  
+
+Geographic sharding:  
+Example: All European customers in Shard A, US customers in Shard B.  
+
+### between Sharding and Partitioning
+#### Partitioning
+Definition: Breaking a table into smaller logical pieces (partitions) within the same database/server.  
+
+All partitions are still managed by the same DB instance.  
+
+Database engine usually hides the partitioning complexity.  
+
+Types:  
+Horizontal partitioning: Split rows into subsets (e.g., orders by year).  
+
+Vertical partitioning: Split columns into different tables (e.g., user profile info vs. user credentials).  
+
+👉 Example (Horizontal Partitioning):  
+Orders table split by year into partitions.  
+
+Orders_2023  
+Orders_2024  
+
+#### Sharding
+Definition: Distributing data across multiple servers (shards), each running its own database instance.  
+
+Application logic (or middleware) decides which shard to query.  
+
+Used for scalability across machines.  
+
+👉 Example:  
+
+Customers with IDs 1–1M → Shard A (Server 1)  
+
+Customers with IDs 1M–2M → Shard B (Server 2)  
