@@ -77,7 +77,7 @@ combined.thenRun(() -> {
 });
 ```
 
-### volatile in Java
+### Volatile in Java
 The volatile keyword in Java ensures visibility and ordering of variable changes across threads.  
 
 Key Guarantees:  
