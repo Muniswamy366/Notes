@@ -77,4 +77,41 @@ combined.thenRun(() -> {
 });
 ```
 
+### volatile in Java
+The volatile keyword in Java ensures visibility and ordering of variable changes across threads.  
 
+Key Guarantees:  
+Visibility: When one thread writes to a volatile variable, the change is immediately visible to all other threads  
+
+Happens-Before: Writes to volatile variables happen-before subsequent reads (prevents instruction reordering)  
+
+No Caching: Threads always read from main memory, not from CPU cache  
+
+When to Use:  
+Flag variables that control thread execution  
+
+Simple state indicators read by multiple threads  
+
+When you need visibility but NOT atomicity of compound operations  
+
+What volatile Does NOT Do:  
+❌ Does NOT make compound operations atomic (e.g., count++)  
+
+❌ Does NOT provide mutual exclusion (use synchronized or locks)  
+
+❌ Does NOT guarantee atomicity for non-atomic operations  
+
+When NOT to Use:  
+```
+private volatile int count = 0;
+count++;  // NOT thread-safe! (read-modify-write is 3 operations)
+```
+
+Use AtomicInteger or synchronized instead for compound operations.  
+
+Performance:
+Cheaper than synchronized (no locking overhead)  
+
+More expensive than regular variables (prevents optimizations)  
+
+Good for read-heavy scenarios with occasional writes  
