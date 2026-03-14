@@ -121,6 +121,13 @@ Good for read-heavy scenarios with occasional writes
 
 **Constructor Injection is recommended** in frameworks like **Spring** because it provides **immutability, mandatory dependency injection, and better testability**.
 
+### Short Interview Answer
+
+You can say:
+
+> In Dependency Inversion Principle, `UserService` depends on an abstraction like `Database`.
+> The dependency is injected from outside, either manually in the main class or automatically using Spring IoC container through dependency injection.
+
 ---
 
 ## 1️⃣ Ensures Mandatory Dependencies
@@ -190,5 +197,7 @@ Constructor injection helps detect **circular dependencies early at startup**, i
 Spring documentation itself recommends **constructor injection over field injection**.
 
 ---
+
+
 
 
