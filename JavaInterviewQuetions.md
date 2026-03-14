@@ -1,26 +1,12 @@
 # Index
 
-1. [Why constructor injection is recommended](#introduction)
-2. [Circular Dependency in Spring](#installation)
-3. [Usage](#usage)
-4. [API](#api)
+- [Why constructor injection is recommended](#why-constructor-injection-is-recommended)
+
 
 ---
 
-# Introduction
-This is introduction section.
-
-# Installation
-Steps to install.
-
-# Usage
-How to use the application.
-
-# API
-API documentation.
-
-
-# Why constructor injection is recommended
+## Why constructor injection is recommended
+#why-constructor-injection-is-recommended
 
 **Constructor Injection is recommended** in frameworks like **Spring** because it provides **immutability, mandatory dependency injection, and better testability**.
 
