@@ -1,7 +1,7 @@
 # Index
 
 1. [Why constructor injection is recommended](#introduction)
-2. [Installation](#installation)
+2. [Circular Dependency in Spring](#installation)
 3. [Usage](#usage)
 4. [API](#api)
 
@@ -101,7 +101,7 @@ Spring documentation itself recommends **constructor injection over field inject
 
 ---
 
-### Q. Circular Dependency in Spring
+### Circular Dependency in Spring
 
 A **circular dependency** happens when **two or more beans depend on each other**.
 
