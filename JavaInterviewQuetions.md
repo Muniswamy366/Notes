@@ -1,6 +1,6 @@
 # Index
 
-1. [Introduction](#introduction)
+1. [Why constructor injection is recommended](#introduction)
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [API](#api)
@@ -20,7 +20,7 @@ How to use the application.
 API documentation.
 
 
-### Q. Why constructor injection is recommended
+### Why constructor injection is recommended
 
 **Constructor Injection is recommended** in frameworks like **Spring** because it provides **immutability, mandatory dependency injection, and better testability**.
 
