@@ -87,7 +87,7 @@ Spring documentation itself recommends **constructor injection over field inject
 
 ---
 
-### Circular Dependency in Spring
+## Q. Circular Dependency in Spring
 
 A **circular dependency** happens when **two or more beans depend on each other**.
 
@@ -150,7 +150,7 @@ Spring resolves setter injection using **early bean reference**.
 
 ---
 
-# How to Fix Circular Dependency
+# Q. How to Fix Circular Dependency
 
 ### 1️⃣ Use `@Lazy`
 
