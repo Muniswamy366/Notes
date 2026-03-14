@@ -115,3 +115,80 @@ Cheaper than synchronized (no locking overhead)
 More expensive than regular variables (prevents optimizations)  
 
 Good for read-heavy scenarios with occasional writes  
+
+
+### Why constructor injection is recommended
+
+**Constructor Injection is recommended** in frameworks like **Spring** because it provides **immutability, mandatory dependency injection, and better testability**.
+
+---
+
+## 1️⃣ Ensures Mandatory Dependencies
+
+With constructor injection, the object **cannot be created without required dependencies**.
+
+```java
+class UserService {
+
+    private final Database database;
+
+    public UserService(Database database) {
+        this.database = database;
+    }
+}
+```
+
+If `Database` is missing → **object creation fails immediately**.
+
+But with **field injection**, object may be created with `null`.
+
+```java
+@Autowired
+Database database;  // may cause NullPointerException later
+```
+
+---
+
+## 2️⃣ Supports Immutability
+
+Constructor injection allows `final` fields.
+
+```java
+private final Database database;
+```
+
+Once assigned, the dependency **cannot change**, making the class **safer and thread-safe**.
+
+Field injection cannot use `final`.
+
+---
+
+## 3️⃣ Easier Unit Testing
+
+You can easily inject **mock dependencies**.
+
+```java
+Database mockDb = new MockDatabase();
+
+UserService service = new UserService(mockDb);
+```
+
+No Spring container required.
+
+With field injection, testing becomes harder.
+
+---
+
+## 4️⃣ Prevents Circular Dependency Issues
+
+Constructor injection helps detect **circular dependencies early at startup**, instead of failing later at runtime.
+
+---
+
+## 5️⃣ Recommended by Spring Team
+
+Spring documentation itself recommends **constructor injection over field injection**.
+
+---
+
+
