@@ -117,7 +117,7 @@ More expensive than regular variables (prevents optimizations)
 Good for read-heavy scenarios with occasional writes  
 
 
-### Why constructor injection is recommended
+### Q. Why constructor injection is recommended
 
 **Constructor Injection is recommended** in frameworks like **Spring** because it provides **immutability, mandatory dependency injection, and better testability**.
 
@@ -198,9 +198,7 @@ Spring documentation itself recommends **constructor injection over field inject
 
 ---
 
-
-### Circular dependency in Spring
-### Circular Dependency in Spring
+### Q. Circular Dependency in Spring
 
 A **circular dependency** happens when **two or more beans depend on each other**.
 
