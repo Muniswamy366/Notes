@@ -199,5 +199,129 @@ Spring documentation itself recommends **constructor injection over field inject
 ---
 
 
+### Circular dependency in Spring
+### Circular Dependency in Spring
+
+A **circular dependency** happens when **two or more beans depend on each other**.
+
+Example:
+
+```id="u9zzja"
+A → depends on B
+B → depends on A
+```
+
+Spring **cannot create the beans because each one needs the other first**.
+
+---
+
+## Example
+
+```java id="h0db5k"
+@Service
+class A {
+
+    private B b;
+
+    public A(B b) {
+        this.b = b;
+    }
+}
+```
+
+```java id="x7ty22"
+@Service
+class B {
+
+    private A a;
+
+    public B(A a) {
+        this.a = a;
+    }
+}
+```
+
+Spring tries:
+
+```id="y4qcdq"
+Create A → needs B
+Create B → needs A
+```
+
+This causes **BeanCurrentlyInCreationException**.
+
+---
+
+## Important Interview Point
+
+| Injection Type           | Circular Dependency  |
+| ------------------------ | -------------------- |
+| Constructor Injection    | ❌ Not supported      |
+| Setter / Field Injection | ✅ Spring can resolve |
+
+Spring resolves setter injection using **early bean reference**.
+
+---
+
+## How to Fix Circular Dependency
+
+### 1️⃣ Use `@Lazy`
+
+```java id="l5i6s1"
+@Service
+class A {
+
+    private B b;
+
+    public A(@Lazy B b) {
+        this.b = b;
+    }
+}
+```
+
+Spring creates a **proxy instead of the actual bean**.
+
+---
+
+### 2️⃣ Use Setter Injection
+
+```java id="8p9qva"
+@Service
+class A {
+
+    private B b;
+
+    @Autowired
+    public void setB(B b) {
+        this.b = b;
+    }
+}
+```
+
+---
+
+### 3️⃣ Redesign (Best Solution)
+
+Usually circular dependency means **bad design**.
+
+Better approach:
+
+```id="qg30wp"
+A → C
+B → C
+```
+
+Introduce a **third service**.
+
+---
+
+## Short Interview Answer
+
+You can say:
+
+> Circular dependency occurs when two Spring beans depend on each other. With constructor injection Spring cannot resolve it and throws BeanCurrentlyInCreationException. It can sometimes resolve it using setter injection or @Lazy, but the best solution is redesigning the code to remove the circular dependency.
+
+---
+
 
 
