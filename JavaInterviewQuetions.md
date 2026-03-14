@@ -20,7 +20,7 @@ How to use the application.
 API documentation.
 
 
-### Why constructor injection is recommended
+# Why constructor injection is recommended
 
 **Constructor Injection is recommended** in frameworks like **Spring** because it provides **immutability, mandatory dependency injection, and better testability**.
 
@@ -164,7 +164,7 @@ Spring resolves setter injection using **early bean reference**.
 
 ---
 
-## How to Fix Circular Dependency
+# How to Fix Circular Dependency
 
 ### 1️⃣ Use `@Lazy`
 
