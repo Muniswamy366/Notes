@@ -1,5 +1,10 @@
 
-SemaphoreTest
+* `Semaphore vs Mutex`
+* `ReentrantLock`
+* `CountDownLatch vs CyclicBarrier`
+* `ThreadPoolExecutor`
+
+* 
 Thread Starvation
 Deadlock in Java
 
@@ -129,3 +134,128 @@ Cheaper than synchronized (no locking overhead)
 More expensive than regular variables (prevents optimizations)  
 
 Good for read-heavy scenarios with occasional writes  
+
+## Q. Semaphore
+### Semaphore in Java
+
+A **Semaphore** is a synchronization mechanism that **controls how many threads can access a resource at the same time**.
+
+It is available in:
+
+```java
+java.util.concurrent
+```
+
+Think of it like **parking slots** 🚗
+If there are **3 slots**, only **3 cars (threads)** can enter at once.
+
+---
+
+## Example
+
+```java
+import java.util.concurrent.Semaphore;
+
+public class SemaphoreExample {
+
+    static Semaphore semaphore = new Semaphore(2); // only 2 threads allowed
+
+    public static void main(String[] args) {
+
+        Runnable task = () -> {
+            try {
+                semaphore.acquire(); // acquire permit
+                System.out.println(Thread.currentThread().getName() + " acquired permit");
+
+                Thread.sleep(2000);
+
+                System.out.println(Thread.currentThread().getName() + " releasing permit");
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                semaphore.release(); // release permit
+            }
+        };
+
+        for(int i = 0; i < 5; i++) {
+            new Thread(task).start();
+        }
+    }
+}
+```
+
+### Output behavior
+
+Only **2 threads run simultaneously**, others wait.
+
+```
+Thread-1 acquired permit
+Thread-2 acquired permit
+Thread-3 waits
+Thread-4 waits
+Thread-5 waits
+```
+
+---
+
+## Important Methods
+
+| Method               | Description                       |
+| -------------------- | --------------------------------- |
+| `acquire()`          | Thread waits for permit           |
+| `release()`          | Release permit                    |
+| `tryAcquire()`       | Try to get permit without waiting |
+| `availablePermits()` | Number of permits left            |
+
+---
+
+## Fair vs Non-Fair Semaphore
+
+```java
+Semaphore semaphore = new Semaphore(3, true);
+```
+
+`true` → **fair semaphore**
+
+Threads get permits in **FIFO order**.
+
+Default → **non-fair** (better performance).
+
+---
+
+## Real-World Use Cases
+
+* **Database connection pools**
+* **Rate limiting**
+* **Limiting concurrent API calls**
+* **Resource pooling**
+* **Thread throttling**
+
+Example:
+
+```text
+Only 10 users can access API simultaneously
+```
+
+---
+
+## Semaphore vs Lock vs CountDownLatch
+
+| Feature                   | Semaphore | Lock | CountDownLatch |
+| ------------------------- | --------- | ---- | -------------- |
+| Control number of threads | ✅         | ❌    | ❌              |
+| Mutual exclusion          | ❌         | ✅    | ❌              |
+| Wait for tasks to finish  | ❌         | ❌    | ✅              |
+
+---
+
+## Short Interview Answer
+
+You can say:
+
+> Semaphore is a synchronization utility that controls access to a shared resource by multiple threads using permits. Threads acquire a permit before accessing the resource and release it afterward. It is commonly used to limit concurrent access to resources like database connections.
+
+---
+
+
