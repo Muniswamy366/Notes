@@ -1,4 +1,17 @@
 
+SemaphoreTest
+Thread Starvation
+Deadlock in Java
+
+volatile vs synchronized
+
+Runnable vs Callable
+
+CompletableFuture
+
+ThreadPoolExecutor
+
+
 ### Java’s CompletableFuture Writing Non-Blocking Code Made Easy! 💡
 
 Writing asynchronous and non-blocking code is not just an optimization — it’s a requirement.  
